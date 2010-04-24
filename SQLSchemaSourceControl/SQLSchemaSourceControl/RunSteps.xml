@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LogServers>
+  <LogJobs>
+    <server serverName="server1" />
+    <server serverName="server2" />
+
+  </LogJobs>
+
+  <LogObjects>
+
+    <server serverName="server1" databaseName="db1" />
+
+    <server serverName="server2" databaseName="db1" />
+    <server serverName="server2" databaseName="db2" />
+	
+  </LogObjects>
+</LogServers>
