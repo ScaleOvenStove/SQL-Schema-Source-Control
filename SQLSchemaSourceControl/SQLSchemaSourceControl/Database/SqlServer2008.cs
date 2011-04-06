@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using SMO = Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Smo.Agent;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace SQLSchemaSourceControl.Database
 {
@@ -57,6 +58,20 @@ namespace SQLSchemaSourceControl.Database
             }
 
             return nv;
+        }
+
+        public List<string> ListDatabasesForPattern(string pattern)
+        {
+            List<string> databases = new List<string>();
+
+            foreach (SMO.Database d in _srv.Databases)
+            {
+                if(Regex.IsMatch(d.Name, pattern))
+                {
+                    databases.Add(d.Name);
+                }
+            }
+            return databases;
         }
 
         public NameValueCollection GetDatabases()

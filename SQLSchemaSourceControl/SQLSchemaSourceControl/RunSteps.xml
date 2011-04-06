@@ -1,17 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LogServers>
   <LogJobs>
-    <server serverName="server1" />
-    <server serverName="server2" />
-
+    <server serverName="localhost" />
   </LogJobs>
 
   <LogObjects>
-
-    <server serverName="server1" databaseName="db1" />
-
-    <server serverName="server2" databaseName="db1" />
-    <server serverName="server2" databaseName="db2" />
-	
+    <server serverName="localhost" databaseName="random_database" />
   </LogObjects>
 </LogServers>
