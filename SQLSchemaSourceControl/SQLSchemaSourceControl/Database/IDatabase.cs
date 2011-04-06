@@ -20,6 +20,7 @@ namespace SQLSchemaSourceControl.Database
         NameValueCollection GetDatabases();
         NameValueCollection GetLogins();
         NameValueCollection GetConfiguration();
+        List<string> ListDatabasesForPattern(string pattern);
 
         bool SelectDatabase(string DatabaseName);
     }

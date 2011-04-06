@@ -84,39 +84,44 @@ namespace SQLSchemaSourceControl
                 foreach (var logObjectServer in LogObjectServers)
                 {
                     string serverName = (string)logObjectServer.Attribute("serverName");
-                    string dbName = (string)logObjectServer.Attribute("databaseName");
-                    string dbPath = _mainFilePath + "\\" + serverName + @"\" + dbName;
-                    bool newDb = false;
-
-                    if (!Directory.Exists(dbPath))
-                    {
-                        newDb = true;
-                    }
-
+                    //switch to regex match on database name - need to select
                     Database.IDatabase db = new Database.SqlServer2008(serverName);
-                    if (db.SelectDatabase(dbName))
+                    List<string> databases = db.ListDatabasesForPattern((string)logObjectServer.Attribute("databaseName"));
+                    foreach (string dbName in databases)
                     {
+                        string dbPath = _mainFilePath + "\\" + serverName + @"\" + dbName;
+                        bool newDb = false;
 
-                        Console.WriteLine(DateTime.Now.ToString() + " Object Log Start for server " + serverName + " database " + dbName);
-
-                        try
+                        if (!Directory.Exists(dbPath))
                         {
-                            sourceControl.LogObjects(dbPath, "StoredProcedures", db.GetStoredProcedures());
-                            sourceControl.LogObjects(dbPath, "Functions", db.GetFunctions());
-                            sourceControl.LogObjects(dbPath, "Views", db.GetViews());
-                            sourceControl.LogObjects(dbPath, "Tables", db.GetTables());
-                            sourceControl.LogObjects(dbPath, "PartitionFunctions", db.GetPartitionFunctions());
-                            sourceControl.LogObjects(dbPath, "PartitionSchemes", db.GetPartitionSchemes());
-                            sourceControl.LogObjects(dbPath, "Indexes", db.GetIndexes());
-                            sourceControl.LogObjects(dbPath, "Users", db.GetUsers());
-                            if (newDb)
-                            {
-                                sourceControl.Add(dbPath);
-                            }
+                            newDb = true;
                         }
-                        catch
+
+                        if (db.SelectDatabase(dbName))
                         {
-                            // eh.  db is usually unavailable.
+
+                            Console.WriteLine(DateTime.Now.ToString() + " Object Log Start for server " + serverName +
+                                              " database " + dbName);
+
+                            try
+                            {
+                                sourceControl.LogObjects(dbPath, "StoredProcedures", db.GetStoredProcedures());
+                                sourceControl.LogObjects(dbPath, "Functions", db.GetFunctions());
+                                sourceControl.LogObjects(dbPath, "Views", db.GetViews());
+                                sourceControl.LogObjects(dbPath, "Tables", db.GetTables());
+                                sourceControl.LogObjects(dbPath, "PartitionFunctions", db.GetPartitionFunctions());
+                                sourceControl.LogObjects(dbPath, "PartitionSchemes", db.GetPartitionSchemes());
+                                sourceControl.LogObjects(dbPath, "Indexes", db.GetIndexes());
+                                sourceControl.LogObjects(dbPath, "Users", db.GetUsers());
+                                if (newDb)
+                                {
+                                    sourceControl.Add(dbPath);
+                                }
+                            }
+                            catch
+                            {
+                                // eh.  db is usually unavailable.
+                            }
                         }
                     }
                 }
