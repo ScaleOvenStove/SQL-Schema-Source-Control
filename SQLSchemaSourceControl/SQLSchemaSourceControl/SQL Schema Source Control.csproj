@@ -57,6 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\IDatabase.cs" />
+    <Compile Include="Database\SqlServer2008.cs" />
+    <Compile Include="SourceControl\SVN.cs" />
+    <Compile Include="SourceControl\ISourceControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
