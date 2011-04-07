@@ -66,7 +66,7 @@ namespace SQLSchemaSourceControl.Database
 
             foreach (SMO.Database d in _srv.Databases)
             {
-                if(Regex.IsMatch(d.Name, pattern))
+                if(Regex.IsMatch(d.Name, pattern, RegexOptions.IgnoreCase))
                 {
                     databases.Add(d.Name);
                 }
