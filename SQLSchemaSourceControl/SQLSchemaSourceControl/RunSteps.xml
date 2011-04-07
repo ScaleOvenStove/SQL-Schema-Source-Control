@@ -5,6 +5,6 @@
   </LogJobs>
 
   <LogObjects>
-    <server serverName="localhost" databaseName="random_database" />
+    <server serverName="localhost" databaseName="^(?!model$|master$|msdb$|tempdb$|ReportServer$|ReportServerTempDB$)" />
   </LogObjects>
 </LogServers>
